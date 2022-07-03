@@ -1,0 +1,44 @@
+version: '3.9'
+
+volumes:
+  certs:
+    external: true
+
+networks:
+  dockernet:
+      name: dockernet
+      external: true
+
+services:
+  acquire:
+    image: certbot/dns-cloudflare
+    env_file:
+     - .env
+    volumes:
+      - certs:/etc/letsencrypt:rw
+      - certs:/var/lib/letsencrypt:rw
+      - ./cfg:/cfg:ro
+    entrypoint: ["certbot", "certonly", "--dns-cloudflare", "--dns-cloudflare-credentials", "/cfg/cloudflare.ini", "-d", "${DOMAIN}", "--email", "${EMAIL}", "--agree-tos"]
+
+  renew:
+    image: certbot/dns-cloudflare
+    volumes:
+      - certs:/etc/letsencrypt:rw
+      - certs:/var/lib/letsencrypt:rw
+      - ./cfg:/cfg:ro
+    entrypoint: "/bin/sh -c 'while :; do certbot renew --dns-cloudflare --dns-cloudflare-credentials /cfg/cloudflare.ini; sleep 12h; done'"
+
+  envoy:
+    build: 
+      context: .
+    image: envoyproxy/envoy-dev:latest
+    container_name: envoy
+    volumes:
+     - certs:/etc/certs:ro
+    networks:
+      dockernet:
+    depends_on:
+     - certbot
+    ports:
+     - "80:80"
+     - "443:443"
