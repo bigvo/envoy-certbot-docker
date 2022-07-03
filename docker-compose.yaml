@@ -35,6 +35,8 @@ services:
     container_name: envoy
     volumes:
      - certs:/etc/certs:ro
+    env_file:
+     - .env
     networks:
       dockernet:
     depends_on:
