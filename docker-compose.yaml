@@ -33,14 +33,12 @@ services:
       context: .
     image: envoyproxy/envoy-dev:latest
     container_name: envoy
+    environment:
+     - "ENVOY_UID=0"
     volumes:
      - certs:/etc/certs:ro
-    env_file:
-     - .env
     networks:
       dockernet:
-    depends_on:
-     - certbot
     ports:
      - "80:80"
      - "443:443"

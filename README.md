@@ -17,6 +17,7 @@ docker volume create certs
 ```
 
 In compose file and Envoy config external network is used, feel free to adjust it for your needs.
+Because Envoy can't push environment variables to config, update front-envoy to your domain
 
 ## First time certificate acquire
 ```
@@ -30,10 +31,10 @@ docker compose run --rm acquire --dry-run
 
 ## Start infinite loop to run every 12H certbot renew
 ```
-docker compose up renew
+docker compose up -d renew
 ```
 
 ## Start Envoy reverse proxy server
 ```
-docker compose up envoy
+docker compose up -d envoy
 ```
