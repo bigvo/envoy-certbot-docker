@@ -22,6 +22,7 @@ services:
 
   renew:
     image: certbot/dns-cloudflare
+    container_name: certbot-renew
     volumes:
       - certs:/etc/letsencrypt:rw
       - certs:/var/lib/letsencrypt:rw

@@ -26,7 +26,8 @@ static_resources:
             virtual_hosts:
             - name: main
               domains:
-              - "*"
+              - "example.com"
+              - "*.example.com"
               routes:
               - match:
                   prefix: "/"
@@ -56,7 +57,8 @@ static_resources:
             virtual_hosts:
             - name: main
               domains:
-              - "*"
+              - "example.com"
+              - "*.example.com"
               routes:
               - match:
                   prefix: "/api"
