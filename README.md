@@ -16,6 +16,11 @@ Create a volume to save issued certificates:
 docker volume create certs
 ```
 
+Create Docker network via which Dockerized app will be proxied (Or modify docker compose up to your needs)
+```
+docker network create dockernet
+```
+
 In compose file and Envoy config external network is used, feel free to adjust it for your needs.
 Because Envoy can't push environment variables to config, update front-envoy to your domain
 

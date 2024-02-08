@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 envoyproxy/envoy-dev:latest
+FROM --platform=linux/amd64 envoyproxy/envoy:v1.25-latest
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y curl \
