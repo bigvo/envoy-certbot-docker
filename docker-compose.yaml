@@ -38,6 +38,7 @@ services:
      - "ENVOY_UID=0"
     volumes:
      - certs:/etc/certs:ro
+     - ./front-envoy.yaml:/etc/envoy/envoy.yaml
     networks:
       dockernet:
     ports:
